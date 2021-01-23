@@ -7,8 +7,11 @@
  * @param  string  $input
  * @return string
  */
-function snakeCaseToCamelCase(string $input)
+function snakeCaseToCamelCase(string $input,$separator = '_' )
+
 {
+    return lcfirst(str_replace($separator, '', ucwords($input, $separator)));
+    return $input;
 }
 
 /**
@@ -19,8 +22,19 @@ function snakeCaseToCamelCase(string $input)
  * @param  string  $input
  * @return string
  */
+
 function mirrorMultibyteString(string $input)
 {
+    $words = explode(' ', $input);
+    $array = [];
+    foreach ($words as $word) {
+        $word = array_reverse(preg_split("//u", $word, null));
+        $word = implode($word);
+        array_push($array, $word);
+    }
+    return implode(' ', $array);
+
+
 }
 
 /**
@@ -39,4 +53,14 @@ function mirrorMultibyteString(string $input)
  */
 function getBrandName(string $noun)
 {
+    $bands=ucfirst($noun);
+    $firstleеter=substr($noun,0,1);
+    $lastetter=substr($noun,-1);
+    if($firstleеter==$lastetter){
+        $bands.= substr($noun,1);
+    }
+    else{
+        $bands='The ' . $bands;
+        }
+return $bands;
 }
