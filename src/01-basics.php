@@ -72,14 +72,19 @@ if($year<$minyear){
 function isSumEqual(string $input)
 {
 $lenght=strlen($input);
-if($lenght<4)
+if($lenght<6)
 {
     throw new InvalidArgumentException();
 
 }
-
     $firstblock=substr($input,0,3);
     $secondblock=substr($input,3,3);
 
-
+    $sum = str_split($input);
+    if($sum[0]+$sum[1]+$sum[2]==$sum[3]+$sum[4]+$sum[5]){
+        return true;
+    }
+else{
+    return false;
+}
     }
