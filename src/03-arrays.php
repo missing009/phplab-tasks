@@ -10,6 +10,15 @@
  */
 function repeatArrayValues(array $input)
 {
+    $array = [];
+    foreach ($input as $item) {
+        $i = 0;
+        while ($i < $item) {
+            $i++;
+            array_push($array, $item);
+        }
+    }
+    return $array;
 }
 
 /**
@@ -22,6 +31,21 @@ function repeatArrayValues(array $input)
  */
 function getUniqueValue(array $input)
 {
+    if (empty($input)) {
+        return 0;
+    }
+    $d=array_count_values($input);
+    foreach ($d as $key => $value) {
+        if ($value == 1) {
+            $res = $key;
+           return $res;
+        } else {
+            $res = 0;
+
+        }
+    }
+
+
 }
 
 /**
@@ -50,4 +74,5 @@ function getUniqueValue(array $input)
  */
 function groupByTag(array $input)
 {
+
 }
