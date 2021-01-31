@@ -5,9 +5,7 @@ use PHPUnit\Framework\TestCase;
 
 class CountArgumentsTest extends TestCase
 {
-    /**
-     * @dataProvider positiveDataProvider
-     */
+
     public function testPositive($input, $expected)
     {
         $this->assertEquals($expected, countArguments(...$input));
