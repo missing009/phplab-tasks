@@ -71,6 +71,10 @@ function countArguments()
  */
 function countArgumentsWrapper()
 {
-    // put your code here
-
+foreach (func_get_args() as $arg){
+    if (!is_string($arg)){
+        throw  new InvalidArgumentException();
+    }
+    return countArguments();
+}
 }
