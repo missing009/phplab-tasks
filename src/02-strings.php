@@ -4,10 +4,10 @@
  * Transform it into camel cased string and return (i.e. helloWorld or thisIsHomeTask)
  * @see http://xahlee.info/comp/camelCase_vs_snake_case.html
  *
- * @param  string  $input
+ * @param string $input
  * @return string
  */
-function snakeCaseToCamelCase(string $input,$separator = '_' )
+function snakeCaseToCamelCase(string $input, $separator = '_')
 
 {
     return lcfirst(str_replace($separator, '', ucwords($input, $separator)));
@@ -19,7 +19,7 @@ function snakeCaseToCamelCase(string $input,$separator = '_' )
  * Mirror each word individually and return transformed text (i.e. 'АВЫФ ждло')
  * !!! do not change words order
  *
- * @param  string  $input
+ * @param string $input
  * @return string
  */
 
@@ -48,19 +48,18 @@ function mirrorMultibyteString(string $input)
  * europe -> Europeurope
  * Implement this logic.
  *
- * @param  string  $noun
+ * @param string $noun
  * @return string
  */
 function getBrandName(string $noun)
 {
-    $bands=ucfirst($noun);
-    $firstleеter=substr($noun,0,1);
-    $lastetter=substr($noun,-1);
-    if($firstleеter==$lastetter){
-        $bands.= substr($noun,1);
+    $bands = ucfirst($noun);
+    $firstleеter = substr($noun, 0, 1);
+    $lastetter = substr($noun, -1);
+    if ($firstleеter == $lastetter) {
+        $bands .= substr($noun, 1);
+    } else {
+        $bands = 'The ' . $bands;
     }
-    else{
-        $bands='The ' . $bands;
-        }
-return $bands;
+    return $bands;
 }

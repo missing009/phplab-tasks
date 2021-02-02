@@ -20,7 +20,6 @@ function repeatArrayValues(array $input)
     }
     return $array;
 }
-
 /**
  * The $input variable contains an array of digits
  * Return the lowest unique value or 0 if there is no unique values or array is empty.
@@ -34,18 +33,14 @@ function getUniqueValue(array $input)
     if (empty($input)) {
         return 0;
     }
-    $d = array_count_values($input);
-    foreach ($d as $key => $value) {
+    $unique = array_count_values($input);
+    foreach ($unique as $key => $value) {
         if ($value == 1) {
             $res = $key;
             return $res;
         } else {
-            $res = 0;
-
-        }
+            $res = 0;}
     }
-
-
 }
 
 /**
@@ -74,14 +69,14 @@ function getUniqueValue(array $input)
  */
 function groupByTag(array $input)
 {
-$tags=array();
-foreach ($input as $i){
-    foreach ($i['tags']as $tag){
-        $tags[$tag][]=$i['name'];
+    $tags = array();
+    foreach ($input as $i) {
+        foreach ($i['tags'] as $tag) {
+            $tags[$tag][] = $i['name'];
+        }
     }
-}
-foreach ($tags as $key=>$value){
-    sort($tags[$key]);
-}
-return $tags;
+    foreach ($tags as $key => $value) {
+        sort($tags[$key]);
+    }
+    return $tags;
 }
