@@ -19,9 +19,8 @@ function sayHello()
  */
 function sayHelloArgument($arg)
 {
-    return "Hello .$arg";
+    return "Hello $arg";
 }
-
 /**
  * What can be put instead of placeholder
  * so that function throws an InvalidArgumentException if $arg is not: number, string or bool
@@ -35,7 +34,7 @@ function sayHelloArgument($arg)
  */
 function sayHelloArgumentWrapper($arg)
 {
-    if (!is_numeric($arg) || !is_string($arg) || !is_bool($arg)){
+    if (!is_numeric($arg) && !is_string($arg) && !is_bool($arg)){
         throw  new InvalidArgumentException();
     }
 
