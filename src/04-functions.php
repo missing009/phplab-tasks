@@ -68,12 +68,12 @@ function countArguments()
  * @return array
  * @throws InvalidArgumentException
  */
-function countArgumentsWrapper()
+function countArgumentsWrapper(...$arg)
 {
-foreach (func_get_args() as $arg){
-    if (!is_string($arg)){
-        throw  new InvalidArgumentException();
+    for ($i = 0; $i < count($arg); $i++) {
+        if (!is_string($arg[$i])) {
+            throw new InvalidArgumentException(gettype($arg[$i]) . 'not string');
+        }
     }
     return countArguments();
-}
 }

@@ -6,19 +6,19 @@ use PHPUnit\Framework\TestCase;
 class CountArgumentsWrapperTest extends TestCase
 {
 
-    public function testNegative(...$input)
+    public function testPositive(...$input)
     {
 
         $this->expectException(InvalidArgumentException::class);
 
         countArgumentsWrapper($input);    }
 
-    public function negativeDataProvider()
+    public function positiveDataProvider()
     {
         return [
 
-            [1,1,2],
-            ['string',[1,1,3]],
+            [1,2],
+            [['hello']],
             [],
     ];
 
