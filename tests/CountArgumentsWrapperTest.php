@@ -13,7 +13,10 @@ class CountArgumentsWrapperTest extends TestCase
 
         countArgumentsWrapper($input);    }
 
-    public function positiveDataProvider()
+    /**
+     * @return array
+     */
+    public function positiveDataProvider(): array
     {
         return [
 

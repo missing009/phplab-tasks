@@ -4,19 +4,25 @@ use PHPUnit\Framework\TestCase;
 
 class CountArgumentsTest extends TestCase
 {
-    public function testPositive($arg, $expected)
+    /**
+     * @dataProvider positiveDataProvider
+     * @param $input
+     * @param $expected
+     */
+    public function testPositive($input, $expected)
     {
-        $this->assertEquals($expected, countArguments(...$arg));
+        $this->assertEquals($expected, countArguments(...$input));
     }
 
-    public function positiveDataProvider()
+    /**
+     * @return array[]
+     */
+    public function positiveDataProvider(): array
     {
         return [
-            [[], ['argument_count' => 0, 'argument_values' => []]],
-            [['string'], ['argument_count' => 1, 'argument_values' => ['string']]],
-            [['string', 'string'], ['argument_count' => 2, 'argument_values' => ['string', 'string']]],
-            [['string', 'string','string'], ['argument_count' => 3, 'argument_values' => ['string', 'string','string']]],
-
+            [[], ['argument_count' => 0, 'argument_values' => [],]],
+            [['string'], ['argument_count' => 1, 'argument_values' => ['string'],]],
+            [['first', 'second'], ['argument_count' => 2, 'argument_values' => ['first', 'second'],]],
         ];
     }
 
