@@ -13,9 +13,10 @@ function repeatArrayValues(array $input)
     $array = [];
     foreach ($input as $item) {
         $i = 0;
-        while ($i < $item) {
+        while ($i < $item)
+        {
             $i++;
-            array_push($array, $item);
+            $array[] = $item;
         }
     }
     return $array;
