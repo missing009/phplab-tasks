@@ -12,7 +12,11 @@ class SayHelloArgumentWrapperTest extends TestCase
 
         sayHelloArgumentWrapper([22,22,'we']);
     }
-    public function positiveDataProvider()
+
+    /**
+     * @return array
+     */
+    public function positiveDataProvider(): array
     {
         return [
             [0, 'Hello 0'],

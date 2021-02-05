@@ -12,7 +12,10 @@ class SayHelloArgumentTest extends TestCase
         $this->assertEquals($expected, sayHelloArgument($arg));
     }
 
-    public function positiveDataProvider()
+    /**
+     * @return array
+     */
+    public function positiveDataProvider(): array
     {
         return [
             [0, 'Hello 0'],

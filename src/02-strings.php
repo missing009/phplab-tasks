@@ -11,7 +11,6 @@ function snakeCaseToCamelCase(string $input, $separator = '_')
 
 {
     return lcfirst(str_replace($separator, '', ucwords($input, $separator)));
-    return $input;
 }
 
 /**
