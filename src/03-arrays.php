@@ -37,10 +37,8 @@ function getUniqueValue(array $input)
     $unique = array_count_values($input);
     foreach ($unique as $key => $value) {
         if ($value == 1) {
-            $res = $key;
-            return $res;
-        } else {
-            $res = 0;}
+            return $key;
+        }
     }
 }
 
@@ -71,12 +69,15 @@ function getUniqueValue(array $input)
 function groupByTag(array $input)
 {
     $tags = array();
-    foreach ($input as $i) {
-        foreach ($i['tags'] as $tag) {
+    foreach ($input as $i)
+    {
+        foreach ($i['tags'] as $tag)
+        {
             $tags[$tag][] = $i['name'];
         }
     }
-    foreach ($tags as $key => $value) {
+    foreach ($tags as $key => $value)
+    {
         sort($tags[$key]);
     }
     return $tags;
