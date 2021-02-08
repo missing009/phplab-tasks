@@ -3,6 +3,42 @@ require_once './functions.php';
 
 $airports = require './airports.php';
 
+
+
+  if (isset($_GET['selectedleter'])) {
+    $GLOBALS["selectedleter"] = $_GET['selectedleter'];
+  }
+
+
+
+
+if (isset($_GET['filter_by_state'])) {
+    $airports = filterByState($airports, $_GET['filter_by_state']);
+}
+
+
+function filter_array($array, $letter, $order){
+    $matches = array();
+
+    if (isset($letter)){
+    foreach($array as $a){
+        if(substr($a['name'], 0, 1) == $letter)
+            $matches[]=$a;
+    }
+    }
+    else {
+        $matches = $array;
+    }
+    return $matches;
+}
+
+if (isset($_GET['sort'])) {
+    usort($airports, sortByKey($_GET['sort']));
+}
+/** @var TYPE_NAME $airports */
+$airports = filter_array($airports, $selectedleter, $selectedorder);
+
+
 // Filtering
 /**
  * Here you need to check $_GET request if it has any filtering
@@ -51,17 +87,20 @@ $airports = require './airports.php';
     -->
     <div class="alert alert-dark">
         Filter by first letter:
+        <?php $selectedleter?>
 
+        <!-- <a href='index.php?hello=true'>Run PHP Function</a> -->
         <?php foreach (getUniqueFirstLetters(require './airports.php') as $letter): ?>
-            <a href="#"><?= $letter ?></a>
+            <a href="index.php?selectedleter=<?= $letter ?>"><?= $letter ?></a>
         <?php endforeach; ?>
 
         <a href="/" class="float-right">Reset all filters</a>
     </div>
 
     <!--
+
         Sorting task
-        Replace # in HREF so that link follows to the same page with the sort key with the proper sorting value
+        Replace # in HREF so that link follows to the same page with the sort key with the proper sorting$letter
         i.e. /?sort=name or /?sort=code etc
 
         Make sure, that the logic below also works:
@@ -72,11 +111,10 @@ $airports = require './airports.php';
     <table class="table">
         <thead>
         <tr>
-            <th scope="col"><a href="#">Name</a></th>
-            <th scope="col"><a href="#">Code</a></th>
-            <th scope="col"><a href="#">State</a></th>
-            <th scope="col"><a href="#">City</a></th>
-            <th scope="col">Address</th>
+            <th scope="col"><a href="?<?= http_build_query(array_merge($_GET, ['sort' => 'name'])) ?>">Name</a></th>
+            <th scope="col"><a href="?<?= http_build_query(array_merge($_GET, ['sort' => 'code'])) ?>">code</a></th>
+            <th scope="col"><a href="?<?= http_build_query(array_merge($_GET, ['sort' => 'state'])) ?>">State</a></th>
+            <th scope="col"><a href="?<?= http_build_query(array_merge($_GET, ['sort' => 'address'])) ?>">Address</a></th>
             <th scope="col">Timezone</th>
         </tr>
         </thead>
@@ -95,8 +133,11 @@ $airports = require './airports.php';
         <tr>
             <td><?= $airport['name'] ?></td>
             <td><?= $airport['code'] ?></td>
-            <td><a href="#"><?= $airport['state'] ?></a></td>
-            <td><?= $airport['city'] ?></td>
+            <td>
+                <a href="?<?= http_build_query(array_merge($_GET, ['page' => 1, 'filter_by_state' => $airport['state']])) ?>">
+                    <?= $airport['state'] ?>
+                </a>
+            </td>            <td><?= $airport['city'] ?></td>
             <td><?= $airport['address'] ?></td>
             <td><?= $airport['timezone'] ?></td>
         </tr>

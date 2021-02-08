@@ -13,8 +13,23 @@ function getUniqueFirstLetters(array $airports)
 {
     $leters = array();
     foreach ($airports as $i) {
-        array_push($leters,substr($i['name'], 0, 1));
+       array_push($leters,substr($i['name'], 0, 1));
     }
-
+    asort($leters);
     return array_unique($leters);
 }
+function SortbyKey($key)
+{ return function ($a, $b) use ($key) {
+    return strnatcmp($a[$key], $b[$key]);
+};
+
+}
+
+
+function filterByState(array $airports, $state): array
+{
+    return array_values(array_filter($airports, function ($airports) use($state) {
+        return strtolower($airports['state']) == strtolower($state);
+    }));
+}
+
