@@ -151,8 +151,8 @@ if (isset($_GET['page'])) {
     -->
     <nav aria-label="Navigation">
         <ul class="pagination justify-content-center">
-            <?php for ($i = 1; $i <= ceil($airportslength / $limit); $i++): ?>
-                <li class="page-item  <?= $i == $_GET['page'] || (!isset($_GET['page']) && $i == 1) ? : ''; ?>" >
+            <?php for ($i = 1; $i <= ($airportslength/$limit ); $i++): ?>
+                <li class="page-item <?= $i == $_GET['page'] || (!isset($_GET['page']) && $i == 1) ? 'active' : ''; ?>" >
                     <a class="page-link" href="<?= '?' . http_build_query(array_merge($_GET, ['page' => $i])); ?>">
                         <?= $i; ?>
                     </a>
