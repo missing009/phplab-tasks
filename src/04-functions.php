@@ -75,5 +75,5 @@ function countArgumentsWrapper(...$arg)
             throw new InvalidArgumentException(gettype($arg[$i]) . 'not string');
         }
     }
-    return countArguments();
+    return countArguments(...$arg);
 }

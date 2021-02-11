@@ -33,3 +33,7 @@ function filterByState(array $airports, $state): array
     }));
 }
 
+function pagin(array $airports):array{
+    $airports = array_slice( $airports, 10, 10 );
+
+}

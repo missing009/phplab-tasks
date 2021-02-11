@@ -2,21 +2,21 @@
 require_once './functions.php';
 
 $airports = require './airports.php';
-
-
+$limit =15;
+// Filtering
+/**
+ * Here you need to check $_GET request if it has any filtering
+ * and apply filtering by First Airport Name Letter and/or Airport State
+ * (see Filtering tasks 1 and 2 below)
+ */
 
   if (isset($_GET['selectedleter'])) {
     $GLOBALS["selectedleter"] = $_GET['selectedleter'];
   }
 
-
-
-
 if (isset($_GET['filter_by_state'])) {
     $airports = filterByState($airports, $_GET['filter_by_state']);
 }
-
-
 function filter_array($array, $letter, $order){
     $matches = array();
 
@@ -31,20 +31,7 @@ function filter_array($array, $letter, $order){
     }
     return $matches;
 }
-
-if (isset($_GET['sort'])) {
-    usort($airports, sortByKey($_GET['sort']));
-}
-/** @var TYPE_NAME $airports */
 $airports = filter_array($airports, $selectedleter, $selectedorder);
-
-
-// Filtering
-/**
- * Here you need to check $_GET request if it has any filtering
- * and apply filtering by First Airport Name Letter and/or Airport State
- * (see Filtering tasks 1 and 2 below)
- */
 
 // Sorting
 /**
@@ -52,13 +39,23 @@ $airports = filter_array($airports, $selectedleter, $selectedorder);
  * and apply sorting
  * (see Sorting task below)
  */
-
+if (isset($_GET['sort'])) {
+    usort($airports, sortByKey($_GET['sort']));
+}
 // Pagination
 /**
  * Here you need to check $_GET request if it has pagination key
  * and apply pagination logic
  * (see Pagination task below)
  */
+$airportslength= count($airports);
+
+if (isset($_GET['page'])) {
+    $airports = array_slice($airports, $_GET['page'] * $limit - $limit , $limit);
+} else {
+
+    $airports = array_slice($airports, 0 , $limit);
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -88,8 +85,6 @@ $airports = filter_array($airports, $selectedleter, $selectedorder);
     <div class="alert alert-dark">
         Filter by first letter:
         <?php $selectedleter?>
-
-        <!-- <a href='index.php?hello=true'>Run PHP Function</a> -->
         <?php foreach (getUniqueFirstLetters(require './airports.php') as $letter): ?>
             <a href="index.php?selectedleter=<?= $letter ?>"><?= $letter ?></a>
         <?php endforeach; ?>
@@ -137,7 +132,7 @@ $airports = filter_array($airports, $selectedleter, $selectedorder);
                 <a href="?<?= http_build_query(array_merge($_GET, ['page' => 1, 'filter_by_state' => $airport['state']])) ?>">
                     <?= $airport['state'] ?>
                 </a>
-            </td>            <td><?= $airport['city'] ?></td>
+            </td>     <td><?= $airport['city'] ?></td>
             <td><?= $airport['address'] ?></td>
             <td><?= $airport['timezone'] ?></td>
         </tr>
@@ -156,9 +151,13 @@ $airports = filter_array($airports, $selectedleter, $selectedorder);
     -->
     <nav aria-label="Navigation">
         <ul class="pagination justify-content-center">
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <?php for ($i = 1; $i <= ceil($airportslength / $limit); $i++): ?>
+                <li class="page-item  <?= $i == $_GET['page'] || (!isset($_GET['page']) && $i == 1) ? : ''; ?>" >
+                    <a class="page-link" href="<?= '?' . http_build_query(array_merge($_GET, ['page' => $i])); ?>">
+                        <?= $i; ?>
+                    </a>
+                </li>
+            <?php endfor; ?>
         </ul>
     </nav>
 
