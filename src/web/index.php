@@ -106,7 +106,7 @@ if (isset($_GET['page'])) {
     <table class="table">
         <thead>
         <tr>
-            <th scope="col"><a href="?<?= http_build_query(array_merge($_GET, ['sort' => 'name'])) ?>">Name</a></th>
+            <th scope="col"><a href="?<?= http_build_query(array_merge($_GET, ['sort' => 'name'])) ?>">Name1</a></th>
             <th scope="col"><a href="?<?= http_build_query(array_merge($_GET, ['sort' => 'code'])) ?>">code</a></th>
             <th scope="col"><a href="?<?= http_build_query(array_merge($_GET, ['sort' => 'state'])) ?>">State</a></th>
             <th scope="col"><a href="?<?= http_build_query(array_merge($_GET, ['sort' => 'address'])) ?>">Address</a></th>
