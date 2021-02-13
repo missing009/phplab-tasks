@@ -10,28 +10,16 @@ $limit =15;
  * (see Filtering tasks 1 and 2 below)
  */
 
-  if (isset($_GET['selectedleter'])) {
-    $GLOBALS["selectedleter"] = $_GET['selectedleter'];
-  }
+  if (isset($_GET['firstletter'])) {
+      $letter = $_GET['firstletter'];
+      $airports = array_filter($airports, function ($airport) {
+
+          return strtolower($airport['name'][0]) == strtolower($_GET['firstletter']);
+      });  }
 
 if (isset($_GET['filter_by_state'])) {
     $airports = filterByState($airports, $_GET['filter_by_state']);
 }
-function filter_array($array, $letter, $order){
-    $matches = array();
-
-    if (isset($letter)){
-    foreach($array as $a){
-        if(substr($a['name'], 0, 1) == $letter)
-            $matches[]=$a;
-    }
-    }
-    else {
-        $matches = $array;
-    }
-    return $matches;
-}
-$airports = filter_array($airports, $selectedleter, $selectedorder);
 
 // Sorting
 /**
@@ -48,14 +36,12 @@ if (isset($_GET['sort'])) {
  * and apply pagination logic
  * (see Pagination task below)
  */
-$airportslength= count($airports);
 
-if (isset($_GET['page'])) {
-    $airports = array_slice($airports, $_GET['page'] * $limit - $limit , $limit);
-} else {
+$limit = 15;
+$pages = ceil(count($airports) / $limit);
+$page = $_GET['page'] ?? 1;
+$airports = array_slice($airports, ($page - 1) * $limit, $limit);
 
-    $airports = array_slice($airports, 0 , $limit);
-}
 ?>
 <!doctype html>
 <html lang="en">
@@ -84,12 +70,12 @@ if (isset($_GET['page'])) {
     -->
     <div class="alert alert-dark">
         Filter by first letter:
-        <?php $selectedleter?>
-        <?php foreach (getUniqueFirstLetters(require './airports.php') as $letter): ?>
-            <a href="index.php?selectedleter=<?= $letter ?>"><?= $letter ?></a>
+
+        <?php foreach (getUniqueFirstLetters(require './airports.php') as $letter) : ?>
+            <a href="<?= "/?" . http_build_query(array_merge($_GET, ['page' => 1, 'firstletter' => $letter])) ?>"><?= $letter ?></a>
         <?php endforeach; ?>
 
-        <a href="/" class="float-right">Reset all filters</a>
+        <a href="/?page=1" class="float-right">Reset all filters</a>
     </div>
 
     <!--
@@ -106,7 +92,7 @@ if (isset($_GET['page'])) {
     <table class="table">
         <thead>
         <tr>
-            <th scope="col"><a href="?<?= http_build_query(array_merge($_GET, ['sort' => 'name'])) ?>">Name1</a></th>
+            <th scope="col"><a href="?<?= http_build_query(array_merge($_GET, ['sort' => 'name'])) ?>">Name</a></th>
             <th scope="col"><a href="?<?= http_build_query(array_merge($_GET, ['sort' => 'code'])) ?>">code</a></th>
             <th scope="col"><a href="?<?= http_build_query(array_merge($_GET, ['sort' => 'state'])) ?>">State</a></th>
             <th scope="col"><a href="?<?= http_build_query(array_merge($_GET, ['sort' => 'address'])) ?>">Address</a></th>
@@ -151,11 +137,9 @@ if (isset($_GET['page'])) {
     -->
     <nav aria-label="Navigation">
         <ul class="pagination justify-content-center">
-            <?php for ($i = 1; $i <= ($airportslength/$limit ); $i++): ?>
-                <li class="page-item <?= $i == $_GET['page'] || (!isset($_GET['page']) && $i == 1) ? 'active' : ''; ?>" >
-                    <a class="page-link" href="<?= '?' . http_build_query(array_merge($_GET, ['page' => $i])); ?>">
-                        <?= $i; ?>
-                    </a>
+            <?php for ($i = 1; $i <= $pages; $i++) : ?>
+                <li class="page-item <?= $page == $i ? 'active' : '' ?>">
+                    <a class="page-link" href="/?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>"><?= $i ?></a>
                 </li>
             <?php endfor; ?>
         </ul>
