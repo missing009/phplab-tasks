@@ -19,6 +19,9 @@ $limit =15;
 
 if (isset($_GET['filter_by_state'])) {
     $airports = filterByState($airports, $_GET['filter_by_state']);
+    return array_values(array_filter($airports, function ($airports) {
+        return strtolower($airports['state']) == strtolower($_GET['state']);
+    }));
 }
 
 // Sorting
@@ -95,6 +98,8 @@ $airports = array_slice($airports, ($page - 1) * $limit, $limit);
             <th scope="col"><a href="?<?= http_build_query(array_merge($_GET, ['sort' => 'name'])) ?>">Name</a></th>
             <th scope="col"><a href="?<?= http_build_query(array_merge($_GET, ['sort' => 'code'])) ?>">code</a></th>
             <th scope="col"><a href="?<?= http_build_query(array_merge($_GET, ['sort' => 'state'])) ?>">State</a></th>
+            <th scope="col"><a href="?<?= http_build_query(array_merge($_GET, ['sort' => 'city'])) ?>">City</a></th>
+
             <th scope="col"><a href="?<?= http_build_query(array_merge($_GET, ['sort' => 'address'])) ?>">Address</a></th>
             <th scope="col">Timezone</th>
         </tr>
@@ -139,7 +144,7 @@ $airports = array_slice($airports, ($page - 1) * $limit, $limit);
         <ul class="pagination justify-content-center">
             <?php for ($i = 1; $i <= $pages; $i++) : ?>
                 <li class="page-item <?= $page == $i ? 'active' : '' ?>">
-                    <a class="page-link" href="/?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>"><?= $i ?></a>
+                    <a clasPluginss="page-link" href="/?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>"><?= $i ?></a>
                 </li>
             <?php endfor; ?>
         </ul>

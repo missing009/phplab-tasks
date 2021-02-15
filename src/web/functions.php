@@ -28,10 +28,3 @@ function SortbyKey($key): Closure
 }
 
 
-function filterByState(array $airports, $state): array
-{
-    return array_values(array_filter($airports, function ($airports) use ($state) {
-        return strtolower($airports['state']) == strtolower($state);
-    }));
-}
-
