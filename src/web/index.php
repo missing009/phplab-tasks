@@ -12,7 +12,7 @@ $limit =15;
 
   if (isset($_GET['firstletter'])) {
       $letter = $_GET['firstletter'];
-      $airports = array_filter($airports, function ($airport) {
+      $airports = array_filter($airports, function ($airport)  {
 
           return strtolower($airport['name'][0]) == strtolower($_GET['firstletter']);
       });  }
