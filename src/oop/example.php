@@ -10,11 +10,10 @@ $calc->addCommand('-', new SubCommand());
 // You can use any operation for computing
 // will output 2
 echo $calc->init(1)
-    ->compute('+', 1)
+    ->compute('-', 1)
     ->getResult();
 
 echo PHP_EOL;
-
 // Multiply operations
 // will output 10
 echo $calc->init(15)
@@ -23,7 +22,6 @@ echo $calc->init(15)
     ->getResult();
 
 echo PHP_EOL;
-
 // TODO implement replay method
 // should output 4
 echo $calc->init(1)
@@ -33,7 +31,6 @@ echo $calc->init(1)
     ->getResult();
 
 echo PHP_EOL;
-
 // TODO implement undo method
 // should output 1
 echo $calc->init(1)

@@ -1,12 +1,13 @@
+
 <?php
 
 use PHPUnit\Framework\TestCase;
-use src\oop\Commands\SumCommand;
+use src\oop\Commands\DivCommand;
 
-class SumCommandTest extends TestCase
+class DivCommandTest extends TestCase
 {
     /**
-     * @var SumCommand
+     * @var DivCommand
      */
     private $command;
 
@@ -17,7 +18,7 @@ class SumCommandTest extends TestCase
      */
     public function setUp(): void
     {
-        $this->command = new SumCommand();
+        $this->command = new DivCommand();
     }
 
     /**
@@ -26,10 +27,9 @@ class SumCommandTest extends TestCase
     public function commandPositiveDataProvider()
     {
         return [
-            [10, 1, 11],
-            [4, 4, 8],
-            [-2, 2, 0],
-
+            [1, 1, 1],
+            [6, 2, 3],
+            [10, 2, 5],
         ];
     }
 
