@@ -1,4 +1,3 @@
-
 <?php
 
 use PHPUnit\Framework\TestCase;
@@ -45,7 +44,7 @@ class DivCommandTest extends TestCase
 
     public function testCommandNegative()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         $this->command->execute(1);
     }

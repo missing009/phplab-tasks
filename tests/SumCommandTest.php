@@ -3,6 +3,9 @@
 use PHPUnit\Framework\TestCase;
 use src\oop\Commands\SumCommand;
 
+/**
+ * Class SumCommandTest
+ */
 class SumCommandTest extends TestCase
 {
     /**

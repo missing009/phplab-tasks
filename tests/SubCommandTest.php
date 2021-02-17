@@ -45,7 +45,7 @@ class SubCommandTest extends TestCase
 
     public function testCommandNegative()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         $this->command->execute(1);
     }
