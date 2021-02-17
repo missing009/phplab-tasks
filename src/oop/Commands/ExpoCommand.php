@@ -4,7 +4,7 @@
 namespace src\oop\Commands;
 
 
-class PowCommand implements CommandInterface
+class ExpoCommand implements CommandInterface
 {
 
     /**

@@ -1,12 +1,12 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use src\oop\Commands\PowCommand;
+use src\oop\Commands\ExpoCommand;
 
-class PowCommandTest extends TestCase
+class ExpoCommandTest extends TestCase
 {
     /**
-     * @var PowCommand
+     * @var ExpoCommand
      */
     private $command;
 
@@ -17,7 +17,7 @@ class PowCommandTest extends TestCase
      */
     public function setUp(): void
     {
-        $this->command = new PowCommand();
+        $this->command = new ExpoCommand();
     }
 
     /**
