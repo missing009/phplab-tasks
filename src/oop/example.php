@@ -65,7 +65,7 @@ echo $calc->init(1)
     ->getResult();
 
 echo PHP_EOL. '<br/>';
-// should output 1
+// should output 2
 echo $calc->init(4)
     ->compute('-', 2)
     ->getResult();
