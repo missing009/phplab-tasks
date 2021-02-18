@@ -65,3 +65,9 @@ echo $calc->init(1)
     ->getResult();
 
 echo PHP_EOL. '<br/>';
+// should output 1
+echo $calc->init(4)
+    ->compute('-', 2)
+    ->getResult();
+
+echo PHP_EOL. '<br/>';
