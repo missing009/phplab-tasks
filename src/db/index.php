@@ -8,22 +8,21 @@ FROM airports a
 LEFT JOIN states s ON a.state_id = s.id
 LEFT JOIN cities c ON a.city_id = c.id";
 
-$uniqueFirstLetters = FirstLetters($pdo);
-function FirstLetters($pdo)
-{
+$uniqueFirstLetters =[];
+
     $sth = $pdo->prepare('SELECT DISTINCT LEFT(name, 1) AS letter FROM airports ORDER BY LEFT(name, 1)');
     $sth->setFetchMode(PDO::FETCH_ASSOC);
     $sth->execute();
     $items = $sth->fetchAll();
     foreach ($items as $item) {
-        $letters[] = $item['letter'];
+        $uniqueFirstLetters[] = $item['letter'];
     }
 
-    return $letters;
 
-}
 
-if (!empty($_GET['firstletter']) || !empty($_GET['filter_by_state'])) {
+
+if (!empty($_GET['firstletter']) || isset($_GET['filter_by_state'])) {
+
     $query .= ' WHERE ';
 }
 
@@ -32,7 +31,9 @@ if (!empty($_GET['firstletter'])) {
 }
 
 if (isset($_GET['filter_by_state'])) {
-
+    if (isset($_GET['firstletter'])) {
+        $query .= " AND ";
+    }
     $query .= 's.name = ' . " '" . $_GET['filter_by_state'] . "'";
 }
 
@@ -43,11 +44,13 @@ if (isset($_GET['sort'])) {
 $sth = $pdo->prepare($query);
 $sth->setFetchMode(PDO::FETCH_ASSOC);
 $sth->execute();
-$query = $sth->fetchAll();
+
+
+$pagin = $sth->fetchAll();
 $limit = 20;
-$pages = ceil(count($query) / $limit);
+$pages = ceil(count($pagin) / $limit);
 $page = $_GET['page'] ?? 1;
-$query = array_slice($query, ($page - 1) * $limit, $limit);
+$query = array_slice($pagin, ($page - 1) * $limit, $limit);
 ?>
 
 <!doctype html>

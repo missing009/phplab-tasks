@@ -34,10 +34,10 @@ foreach (require_once('../web/airports.php') as $item) {
     // TODO States
     // States
     // To check if city with this name exists in the DB we need to SELECT it first
-    $sthStates = $pdo->prepare('SELECT id FROM states WHERE name = :name');
-    $sthStates->setFetchMode(\PDO::FETCH_ASSOC);
-    $sthStates->execute(['name' => $item['state']]);
-    $state = $sthStates->fetch();
+    $sth = $pdo->prepare('SELECT id FROM states WHERE name = :name');
+    $sth->setFetchMode(\PDO::FETCH_ASSOC);
+    $sth->execute(['name' => $item['state']]);
+    $state = $sth->fetch();
 
     // If result is empty - we need to INSERT city
     if (!$state) {
@@ -54,17 +54,17 @@ foreach (require_once('../web/airports.php') as $item) {
     // TODO Airports
 // States
     // To check if city with this name exists in the DB we need to SELECT it first
-    $sthAiroports = $pdo->prepare('SELECT id FROM airports WHERE name = :name');
-    $sthAiroports->setFetchMode(\PDO::FETCH_ASSOC);
-    $sthAiroports->execute(['name' => $item['name']]);
-    $airoports = $sthAiroports->fetch();
+    $sthStates = $pdo->prepare('SELECT id FROM airports WHERE name = :name');
+    $sth->setFetchMode(\PDO::FETCH_ASSOC);
+    $sth->execute(['name' => $item['name']]);
+    $airoports = $sth->fetch();
 
     // If result is empty - we need to INSERT city
     if (!$airoports) {
-        $sthAiroports = $pdo->prepare(
+        $sth = $pdo->prepare(
             'INSERT INTO airports (name,state_id,city_id,code,address,timezone) VALUES (:name,:state_id,:city_id,:code,:address,:timezone)'
         );
-        $answer = $sthAiroports->execute(
+        $sth->execute(
             [
                 'name' => $item['name'],
                 'state_id' => $stateId,
@@ -75,9 +75,9 @@ foreach (require_once('../web/airports.php') as $item) {
             ]
         );
         // We will use this variable to INSERT airport
-        $sthAiroports = $pdo->lastInsertId();
+        $sth = $pdo->lastInsertId();
     } else {
         // We will use this variable to INSERT airport
-        $sthAiroports = $airoports['id'];
+        $sth = $airoports['id'];
     }
 }

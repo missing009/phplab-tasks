@@ -121,7 +121,8 @@ $airports = array_slice($airports, ($page - 1) * $limit, $limit);
                 <a href="?<?= http_build_query(array_merge($_GET, ['page' => 1, 'filter_by_state' => $airport['state']])) ?>">
                     <?= $airport['state'] ?>
                 </a>
-            </td>     <td><?= $airport['city'] ?></td>
+            </td>
+            <td><?= $airport['city'] ?></td>
             <td><?= $airport['address'] ?></td>
             <td><?= $airport['timezone'] ?></td>
         </tr>
